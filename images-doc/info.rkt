@@ -15,8 +15,7 @@
                      "racket-doc"
                      "scribble-lib"
                      "slideshow-lib"
-                     "typed-racket-lib"
-                     "unstable-latent-contract-lib"))
+                     "typed-racket-lib"))
 (define update-implies '("images-lib"))
 
 (define pkg-desc "Documentation for images-lib")

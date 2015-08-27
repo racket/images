@@ -4,7 +4,6 @@
 
 (define deps '("base"
                "draw-lib"
-               "unstable-latent-contract-lib"
                "unstable-parameter-group-lib"
                "typed-racket-lib"))
 

@@ -1,9 +1,11 @@
 #lang racket/base
 
 (require racket/class racket/draw unstable/parameter-group
-         racket/contract unstable/latent-contract unstable/latent-contract/defthing
+         racket/contract
          "../private/flomap.rkt"
          "../private/deep-flomap.rkt"
+         "../private/latent-contract.rkt"
+         "../private/latent-contract/defthing.rkt"
          (for-syntax racket/base syntax/parse))
 
 (provide light-metal-icon-color

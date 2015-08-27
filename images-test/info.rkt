@@ -7,7 +7,6 @@
 (define build-deps '("pict-lib"
                      "slideshow-lib"
                      "racket-doc"
-                     "unstable-latent-contract-lib"
                      "unstable-parameter-group-lib"))
 (define update-implies '("images-lib"))
 
