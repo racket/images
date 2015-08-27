@@ -6,8 +6,7 @@
                "images-lib"))
 (define build-deps '("pict-lib"
                      "slideshow-lib"
-                     "racket-doc"
-                     "unstable-parameter-group-lib"))
+                     "racket-doc"))
 (define update-implies '("images-lib"))
 
 (define compile-omit-paths '("tests"))

@@ -4,7 +4,6 @@
 
 (define deps '("base"
                "draw-lib"
-               "unstable-parameter-group-lib"
                "typed-racket-lib"))
 
 (define pkg-desc "Functions for constructing icons and logos")
