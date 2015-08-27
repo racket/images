@@ -4,7 +4,8 @@
 
 (define deps '("base"
                "draw-lib"
-               "typed-racket-lib"))
+               "typed-racket-lib"
+               "scribble-lib"))
 
 (define pkg-desc "Functions for constructing icons and logos")
 
