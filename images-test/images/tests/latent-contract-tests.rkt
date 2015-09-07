@@ -13,7 +13,7 @@
     (list x)))
 
 (module module1 racket/base
-  (require 'module0 unstable/latent-contract)
+  (require 'module0 images/private/latent-contract)
   (provide (activate-contract-out identity listify)))
 
 (require 'module0)
