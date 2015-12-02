@@ -1,24 +1,27 @@
-#lang racket/base
+#lang typed/racket/base
 
-(require racket/draw racket/class racket/match
-         racket/unsafe/ops
+(require typed/racket/draw typed/racket/class racket/match
+         racket/unsafe/ops racket/math
          "flomap-struct.rkt"
          "flomap-pointwise.rkt"
          "flomap-resize.rkt")
 
 (provide bitmap->flomap flomap->bitmap draw-flomap)
 
+(: bitmap->flomap : (Instance Bitmap%) [#:unscaled? Any] -> flomap)
 (define (bitmap->flomap bm #:unscaled? [unscaled? #f])
   (unless (is-a? bm bitmap%)
     (raise-type-error 'bitmap->flomap "bitmap% instance" bm))
   
   (define backing-scale (send bm get-backing-scale))
+  (: scale : Nonnegative-Integer -> Nonnegative-Integer)
   (define (scale d)
-    (if unscaled? (inexact->exact (ceiling (* d backing-scale))) d))
+    (if unscaled? (exact-ceiling (* d backing-scale)) d))
   
   (define w (scale (send bm get-width)))
   (define h (scale (send bm get-height)))
   (define bs (make-bytes (* 4 w h)))
+
   (send bm get-argb-pixels 0 0 w h bs #t #t #:unscaled? unscaled?)
   (send bm get-argb-pixels 0 0 w h bs #f #t #:unscaled? unscaled?)
   
@@ -39,11 +42,13 @@
   
   argb-fm)
 
+(: unsafe-fl->byte : Flonum -> Nonnegative-Fixnum)
 (define (unsafe-fl->byte x)
   (unsafe-fl->fx
    (unsafe-flround
     (unsafe-flmax 0.0 (unsafe-flmin 255.0 (unsafe-fl* x 255.0))))))
 
+(: flomap->bitmap : flomap [#:backing-scale Positive-Real] -> (Instance Bitmap%))
 (define (flomap->bitmap fm #:backing-scale [backing-scale 1.0])
   (match-define (flomap vs c w h) fm)
   (let* ([fm  (case c
@@ -72,13 +77,21 @@
       (unsafe-bytes-set! bs i1 (unsafe-fl->byte r))
       (unsafe-bytes-set! bs i2 (unsafe-fl->byte g))
       (unsafe-bytes-set! bs i3 (unsafe-fl->byte b)))
-    
-    (define (scale d) (inexact->exact (ceiling (/ d backing-scale))))
+
+    (: scale : Real -> Positive-Integer)
+    (define (scale d) (assert (exact-ceiling (/ d backing-scale)) positive?))
     (define bm (make-bitmap (scale w) (scale h) #:backing-scale backing-scale))
-    (send bm set-argb-pixels 0 0 w h bs #t #t #:unscaled? #t)
-    (send bm set-argb-pixels 0 0 w h bs #f #t #:unscaled? #t)
+    (send bm set-argb-pixels 0 0
+          (assert w exact-nonnegative-integer?)
+          (assert h exact-nonnegative-integer?)
+          bs #t #t #:unscaled? #t)
+    (send bm set-argb-pixels 0 0
+          (assert w exact-nonnegative-integer?)
+          (assert h exact-nonnegative-integer?)
+          bs #f #t #:unscaled? #t)
     bm))
 
+(: draw-flomap : (-> (Instance Bitmap-DC%) Any) Integer Integer -> flomap)
 (define (draw-flomap draw-proc w h)
   (unless (w . >= . 0) (raise-type-error 'draw-flomap "nonnegative fixnum" 0 w h draw-proc))
   (unless (h . >= . 0) (raise-type-error 'draw-flomap "nonnegative fixnum" 1 w h draw-proc))
