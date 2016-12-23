@@ -147,7 +147,7 @@ The backing scale of DrRacket icons.
 
 A backing scale of 2 means that the icon bitmap internally has two
 pixels per drawing unit, so it renders well at double resolution,
-such as Retina display mode for Mac OS X.
+such as Retina display mode for Mac OS.
 
 @history[#:added "1.1"]}
 
