@@ -10,3 +10,6 @@
 (define pkg-desc "Functions for constructing icons and logos")
 
 (define pkg-authors '(ntoronto))
+
+(define license
+  '(Apache-2.0 OR MIT))

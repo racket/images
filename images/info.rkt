@@ -8,3 +8,6 @@
 (define pkg-desc "Functions (and docs and tests) for constructing icons and logos")
 
 (define pkg-authors '(ntoronto))
+
+(define license
+  '(Apache-2.0 OR MIT))

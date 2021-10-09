@@ -21,3 +21,6 @@
 (define pkg-desc "Documentation for images-lib")
 
 (define pkg-authors '(ntoronto))
+
+(define license
+  '(Apache-2.0 OR MIT))
