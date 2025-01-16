@@ -60,9 +60,9 @@
 
 (: beckmann-distribution (Flonum Flonum -> Flonum))
 (define (beckmann-distribution cos-θ m)
-  (define x (/ (tan (acos cos-θ)) m))
+  (define x (/ (tan (flacos cos-θ)) m))
   (define m*cos^2-θ (* m cos-θ cos-θ))
-  (/ (exp (- (* x x))) (* pi m*cos^2-θ m*cos^2-θ)))
+  (/ (flexp (- (* x x))) (* pi m*cos^2-θ m*cos^2-θ)))
 
 ;; ===================================================================================================
 ;; Pass 1: tracing from a directional light source

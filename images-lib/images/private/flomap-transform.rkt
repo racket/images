@@ -294,13 +294,13 @@
 (define ((orthographic-projection α) d)
   (define f (/ d 2.0 (sin (* 0.5 (real->double-flonum α)))))
   (projection-mapping (λ (ρ) (* (sin ρ) f))
-                      (λ (r) (asin (/ r f)))))
+                      (λ (r) (flasin (/ r f)))))
 
 (: equal-area-projection (Real -> Projection))
 (define ((equal-area-projection α) d)
   (define f (/ d 4.0 (sin (* 0.25 (real->double-flonum α)))))
   (projection-mapping (λ (ρ) (* 2.0 (sin (* 0.5 ρ)) f))
-                      (λ (r) (* 2.0 (asin (/ r 2.0 f))))))
+                      (λ (r) (* 2.0 (flasin (/ r 2.0 f))))))
 
 (: stereographic-projection (Real -> Projection))
 (define ((stereographic-projection α) d)
